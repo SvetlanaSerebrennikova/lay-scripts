@@ -75,10 +75,7 @@ const puppeteer = require("puppeteer");
   } catch (error) {
     console.log(`${scriptName} script failed`, error)
   }
-
-  ".style__selectWrap___MCgnk:nth-child(4) > div > div > input"
-
-
-  browser.close();
+  
+  await browser.close();
 
 })()
