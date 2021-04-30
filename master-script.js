@@ -100,10 +100,11 @@ const puppeteer = require("puppeteer");
     await page.keyboard.press('Backspace');
     await page.type("div[data-pptr=displayName] input", name);
     await page.click("[data-pptr=city]")
-    await page.click("[data-pptr=Ainaži]");
+    await page.waitForTimeout(3000);
+    await page.click("[data-pptr=ainaži]");
     await page.click("[data-pptr=lookingFor]");
     await page.waitForTimeout(1000);
-    await page.click("[data-pptr=Man]");
+    await page.click("[data-pptr=man]");
     await page.waitForTimeout(1000);
     await page.click("[data-pptr=chip-1] svg");
     await page.waitForTimeout(1000);
@@ -122,12 +123,12 @@ const puppeteer = require("puppeteer");
     const interests = "test";
     const dressStyle = "test";
     await page.waitForTimeout(5000);
-    await page.type("[data-pptr=helloMessage] textarea", helloMessage);
+    await page.type("[data-pptr=helloMessage]", helloMessage);
     await page.click("[data-pptr=languages]");
-    await page.click("[data-pptr=English]");
+    await page.click("[data-pptr=english]");
     await page.click("[data-pptr=languages]");
     await page.click("[data-pptr=figure]");
-    await page.click("[data-pptr=Athletic]");
+    await page.click("[data-pptr=athletic]");
     await page.click("div[data-pptr=height]");
     await page.type("[data-pptr=height]", "170");
     await page.keyboard.press('Backspace');
@@ -135,13 +136,13 @@ const puppeteer = require("puppeteer");
     await page.keyboard.press('Backspace');
     await page.waitForTimeout(5000);
     await page.click("[data-pptr=ethnicity]");
-    await page.click("[data-pptr=African]");
+    await page.click("[data-pptr=african]");
     await page.waitForTimeout(5000);
     await page.click("[data-pptr=hair]");
-    await page.click("[data-pptr=Black]");
+    await page.click("[data-pptr=black]");
     await page.waitForTimeout(5000);
     await page.click("[data-pptr=eyes]");
-    await page.click("[data-pptr=Amber]");
+    await page.click("[data-pptr=amber]");
     await page.waitForTimeout(5000);
     await page.type("div [data-pptr=occupation]", occupation);
     await page.keyboard.press('Backspace');
@@ -169,11 +170,12 @@ const puppeteer = require("puppeteer");
     const likes = "test";
     const dislikes = "test";
     await page.waitForTimeout(5000);
-    await page.type("[data-pptr=whatYouLikeInSex]", likes);
+    await page.type("[data-pptr=whatYouLikeInSex] textarea", likes);
     await page.type("[data-pptr=whatYouDontLikeInSex]", dislikes);
     await page.waitForTimeout(5000);
     await page.click("[data-pptr=areaAvailability]");
-    await page.click("[data-pptr=Only within my city]");
+    await page.waitForTimeout(5000);
+    await page.click("[data-pptr=onlyWithinMyCity]");
     await page.waitForTimeout(5000);
     await page.type("[data-pptr=expectedReward]", "200");
     await page.keyboard.press('Backspace');
@@ -185,8 +187,20 @@ const puppeteer = require("puppeteer");
   } catch (error) {
     console.log(`${scriptName} script failed`, error)
   }
-  
-  
+
+  try {
+    var scriptName = "photo";
+    const inputUploadHandle = await page.$('input[type=file]');
+    await page.waitForTimeout(5000);
+  let fileToUpload = `testPhoto.jpg`;
+  inputUploadHandle.uploadFile(fileToUpload);
+  await page.evaluate(() => document.querySelector(`[data-pptr=addPhoto]`).click());
+  await page.waitForTimeout(5000);
+    console.log(`${scriptName} script succeeded`);
+  } catch (error) {
+    console.log(`${scriptName} script failed`, error)
+  }
+
   await browser.close();
 
 })()
